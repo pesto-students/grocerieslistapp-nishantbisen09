@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/app.css" />
+    <link rel="stylesheet" href="./assets/css/fontAwesome/css/all.css" />
+    <title>Groceries App</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="logout-container">
+       <span id="userName"></span>
+       <i id="logoutBtn" class="fas fa-sign-out-alt logout-icon" title="Logout"></i>
+      </div>
+      <div class="list-container shadow">
+          <div class="list-wrapper">
+        <h1 class="list-header">Groceries</h1>
+        <div id="listContainer">
+
+          </div>
+        <button id="addBtn" class="add-item-btn">+</button>
+
+        </div>
+        </div>
+      </div>
+    </div>
+    <script src="./constants/appConstants.js"></script>
+    <script src="./js/index.js"></script>
+    
+  </body>
+</html>
