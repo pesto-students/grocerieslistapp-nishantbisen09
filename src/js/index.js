@@ -19,10 +19,12 @@ const onAddButtonClick = () => {
     return;
   }
   if (isGroceryInEditMode()) return;
-  groceries.push({ name: "", isEditMode: true });
+  addGrocery();
   createGroceriesList();
   addEventListners();
 };
+
+const addGrocery = () => groceries.push({ name: "", isEditMode: true });
 
 const isGroceryInEditMode = () =>
   groceries.some((grocery) => grocery.isEditMode);
