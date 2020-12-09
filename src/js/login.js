@@ -1,7 +1,7 @@
 const shouldRedirecToGroceryList = () =>
   !!localStorage.getItem(APP_CONSTANTS.currentUser);
 
-if (shouldRedirecToGroceryList()) window.location.href = "../index.html";
+if (shouldRedirecToGroceryList()) redirectToGroceryList();
 
 const loginForm = document.getElementById("loginForm");
 
@@ -59,7 +59,7 @@ const onSignInClick = (event) => {
     isUserPresent(userName) &&
     !isPasswordCorrect(userName, password)
   ) {
-    alert("Incorrect Password");
+    alert(APP_CONSTANTS.incorrectPasswordMessage);
   } else {
     validateMaxNoOfUserData();
     addUser(userName, password);

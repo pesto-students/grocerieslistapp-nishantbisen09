@@ -2,10 +2,9 @@ const shouldRedirectUser = () => {
   return !localStorage.getItem(APP_CONSTANTS.currentUser);
 };
 
-if (shouldRedirectUser()) window.location.href = "pages/login.html";
+if (shouldRedirectUser()) redirectToLoginPage();
 
-const addBtn = document.getElementById("addBtn");
-const logoutBtn = document.getElementById("logoutBtn");
+const redirectToLoginPage = () => (window.location.href = "pages/login.html");
 
 const getCurrentUserData = () =>
   JSON.parse(
@@ -15,7 +14,10 @@ const getCurrentUserData = () =>
 let groceries = getCurrentUserData() ? getCurrentUserData() : [];
 
 const onAddButtonClick = () => {
-  if (groceries.length === 5) return;
+  if (groceries.length === APP_CONSTANTS.maximumNoOfGroceriesPerUser) {
+    alert(APP_CONSTANTS.maxListLimitMessage);
+    return;
+  }
   if (isGroceryInEditMode()) return;
   groceries.push({ name: "", isEditMode: true });
   createGroceriesList();
@@ -36,12 +38,13 @@ const createGroceriesList = () => {
 
 const addEventListners = () => {
   const itemName = document.querySelector(".item-name");
+  const saveButton = document.getElementById("saveBtn");
+  const editButtons = document.getElementsByName("edit-btn");
+  const deleteButtons = document.getElementsByName("delete-btn");
+
   itemName?.addEventListener("change", (event) =>
     onGroceryNameChangeHandler(event, itemName.id)
   );
-  const saveButton = document.getElementById("saveBtn");
-  const deleteButtons = document.getElementsByName("delete-btn");
-  const editButtons = document.getElementsByName("edit-btn");
 
   saveButton?.addEventListener("click", () => onSaveButtonClick(itemName.id));
 
@@ -68,18 +71,24 @@ const onEditButtonClick = (itemIndex) => {
 };
 
 const onDeleteButtonClick = (itemIndex) => {
-  groceries = groceries.filter(
-    (_grocery, index) => index !== Number(itemIndex)
-  );
+  removeGrocery(itemIndex);
   createGroceriesList();
   addEventListners();
 };
 
-const onSaveButtonClick = (itemIndex) => {
-  groceries = groceries.map((grocery, index) => {
+const removeGrocery = (itemIndex) =>
+  (groceries = groceries.filter(
+    (_grocery, index) => index !== Number(itemIndex)
+  ));
+
+const switchEditModeOff = (itemIndex) =>
+  (groceries = groceries.map((grocery, index) => {
     if (index === Number(itemIndex)) return { ...grocery, isEditMode: false };
     return grocery;
-  });
+  }));
+
+const onSaveButtonClick = (itemIndex) => {
+  switchEditModeOff(itemIndex);
   createGroceriesList();
   addEventListners();
 };
@@ -120,13 +129,18 @@ const renderUserName = () => {
 
 const onLogoutButtonClick = () => {
   localStorage.removeItem(APP_CONSTANTS.currentUser);
-  window.location.href = "pages/login.html";
+  redirectToLoginPage();
 };
 
+// On Application Load
 createGroceriesList();
 addEventListners();
 renderUserName();
 
-//global event listeners
+// Static Elements
+const addBtn = document.getElementById("addBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+// Global event listeners
 addBtn.addEventListener("click", onAddButtonClick);
 logoutBtn.addEventListener("click", onLogoutButtonClick);
