@@ -9,15 +9,15 @@
   <body>
     <div class="login-container shadow">
       <h1 class="login-header">Login</h1>
-      <form>
+      <form id="loginForm">
         <div class="input-field">
-          <input id="username" type="text" placeholder="Username (e.g. John)" />
+          <input id="username" type="text" placeholder="Username (e.g. John)" required />
         </div>
         <div class="input-field">
-          <input id="password" type="password" placeholder="Password" />
+          <input id="password" type="password" placeholder="Password" required />
         </div>
         <div class="sign-in-btn-container">
-          <button id="signInBtn" class="sign-in-btn">Sign in</button>
+          <button id="signInBtn" class="sign-in-btn" type="submit">Sign in</button>
         </div>
       </form>
     </div>

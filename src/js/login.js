@@ -3,7 +3,7 @@ const shouldRedirecToGroceryList = () =>
 
 if (shouldRedirecToGroceryList()) window.location.href = "../index.html";
 
-const signInBtn = document.getElementById("signInBtn");
+const loginForm = document.getElementById("loginForm");
 
 const isUserPresent = (name) =>
   !!localStorage.getItem(APP_CONSTANTS.users) &&
@@ -48,4 +48,4 @@ const onSignInClick = (event) => {
 };
 
 //event listeners
-signInBtn.addEventListener("click", onSignInClick);
+loginForm.addEventListener("submit", onSignInClick);
